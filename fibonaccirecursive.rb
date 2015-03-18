@@ -1,8 +1,13 @@
-#! usr/bin/eval ruby
+#! /usr/bin/env ruby
 
 
 def fib(num)
-	num > 2 ?	fibs = fib(num-1) << fibs[-1]+fibs[-2] : [0,1]
+	if num < 2
+		[0,1]
+	else
+		fibs = fib(num-1)
+		fibs << fibs[-1] + fibs[-2]
+	end
 end
 
 puts fib(ARGV[0].to_i)
