@@ -35,3 +35,20 @@ end
 roo = [8,6,4,7,2,3,9,1,4]
 
 p merge_sort_rec roo
+
+def ms(a)
+	l = a.length
+	if l < 2
+		a
+	else
+		m(ms(a[0...l/2]), ms(a[l/2..-1]))
+	end
+end
+
+def m(a, b)
+	return b if a.empty?
+	return a if b.empty?
+	a.first < b.first ? [a.first] + m(a[1..-1], b) : [b.first] + m(a, b[1..-1])
+end
+
+p ms(roo)
