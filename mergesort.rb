@@ -1,36 +1,43 @@
-=begin
-def merge_sort(nums, lvl=1)
-	l = nums.length
-	if l > lvl
-		merge_sort(nums[0..l/2]) + merge_sort(nums[l/2..l])
-	else
-		nums.each_with_index do |n, i|
-			if i < nums.length
-				if n > nums[i+1]
-					n, nums[i+1] = nums[i+1], n
+def merge_sort(nums)
+	num_chunks = nums.map { |n| [n] }
+	p num_chunks
+	result = []
+	# merging
+	(0...nums.length).step(2) do |i|
+		puts "====step #{i}===="
+		chunk = num_chunks[i]
+		next_chunk = num_chunks[i+1]
+		if next_chunk.nil?
+			puts "only one chunk #{chunk}, nothing to compare"
+			merged_chunks = [chunk]
+		else
+			merged_chunks = []
+			until chunk.empty? && next_chunk.empty?
+				if next_chunk.empty?
+					puts "next chunk is empty"
+					lower_first = chunk.shift
+				elsif chunk.empty?
+					puts "chunk is empty"
+					lower_first = next_chunk.shift
 				else
-
+					puts "comparing #{chunk} and #{next_chunk}"
+					if chunk.first < next_chunk.first
+						lower_first = chunk.shift
+					else
+						lower_first = next_chunk.shift
+					end
+				end
+				puts "the lowest first number of any chunk is #{lower_first}"
+				merged_chunks << lower_first
+				puts "the combined chunks are #{merged_chunks}"
 			end
 		end
+		result << merged_chunks
 	end
-end
-=end
-
-def split(nums)
-	l = nums.length
-	if l > 2
-		h1 = nums[0...l/2]
-		h2 = nums[l/2..l]
-		[split(h1), split(h2)]
-	else
-		nums
-	end
+	p result
 end
 
-def merge(nums)
-	if nums == 
-end
+
 
 roo = [8,6,4,7,2,3,9,1]
-p split roo
-p merge split roo
+merge_sort roo
