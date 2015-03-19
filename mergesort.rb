@@ -8,26 +8,24 @@ def merge_chunks(all_chunks)
 	return all_chunks[0] unless all_chunks.length > 1
 	sorted_chunks = []
 	all_chunks.each_slice(2) do |chunks|
-		merged_chunks = merge_pair(chunks)
+		merged_chunks = merge_pair(chunks[0], chunks[1])
 		sorted_chunks << merged_chunks
 	end
 	merge_chunks(sorted_chunks)
 end
 
-def merge_pair(chunks)
-	first = chunks[0]
-	second = chunks[1]
-	return first if second.nil?
+def merge_pair(a, b)
+	return a if b.nil?
 	result = []
-	until first.empty? && second.empty?
-		if first.empty?
-			lower_first = second.shift
-		elsif second.empty?
-			lower_first = first.shift
-		elsif first.first < second.first
-			lower_first = first.shift
+	until a.empty? && b.empty?
+		if a.empty?
+			lower_first = b.shift
+		elsif b.empty?
+			lower_first = a.shift
+		elsif a.first < b.first
+			lower_first = a.shift
 		else
-			lower_first = second.shift
+			lower_first = b.shift
 		end
 		result << lower_first
 	end
